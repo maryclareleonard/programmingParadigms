@@ -6,51 +6,47 @@ from Averager import *
 
 from random import shuffle, random
 
-#random generator
-squares = list(n * n for n in range(10000))
-shuffle(squares)
-#print(squares)
-evens = list(n * 2 for n in range(500))
-#shuffle(evens)
-#print(evens)
-floats = list (random() for n in range(200))
-#print (floats)
-
-
-
 class DataSet(ABC):
     def __init__(self,array,Sorter,Filterer,Averager):
         super().__init__()
         self.array = array
-        self.sort = Sorter
-        self.filter = Filterer
-        self.average = Averager
+        self.sorter = Sorter
+        self.filterer = Filterer
+        self.averager = Averager
     def sort(self):
-        self.sort(self.array)
+        self.sorter.sort(self)
     def filter(self):
-        self.filter(self.array,1000)
+        self.filterer.filter(self,self.array,50)
     def average(self):
-        self.average(self.array)
+        self.averager.average(self,self.array)
 
 class DataSets():
     def __init__(self):
         self.list = []
-        self.list.append(DataSet(self.create_dataset,QuickSort,Minimum,Mean))
+        self.list.append(DataSet(self.create_dataset(),QuickSort,Minimum,Mean))
+        self.list.append(DataSet(self.create_dataset(),QuickSort,Maximum,Mean))
+        self.list.append(DataSet(self.create_dataset(),InsertionSort,Minimum,Mean))
+        self.list.append(DataSet(self.create_dataset(),InsertionSort,Minimum,Median))
+        self.list.append(DataSet(self.create_dataset(),InsertionSort,Minimum,Mode))
+    
+    def print(self):
+        for i in range(len(self.list)):
+            print("Array {}:".format(i))
+            print(self.list[i].array)
+            self.list[i].sort()
+            self.list[i].average()
+            self.list[i].filter()
+            print() 
 
     def create_dataset(self):
-        array = shuffle(list(n * n for n in range(10000)))
-        return array
-
-        #list.append(DataSet(QuickSort,Minimum,Mean))
-        #list.append(DataSet(QuickSort,Minimum,Mode))
-        #list.append(DataSet(QuickSort,Maximum,Mean))
-        #list.append(DataSet(QuickSort,Maximum,Mode))
-        #list.append(DataSet(InsertionSort,Maximum,Mode))
-        #list.append(DataSet(InsertionSort,Minimum,Mode))
+        squares = list(n * n for n in range(15))
+        shuffle(squares)    
+        return squares
         
 
 sets = DataSets()
-print(sets.list[0])
+sets.print()
+
 
 
     
