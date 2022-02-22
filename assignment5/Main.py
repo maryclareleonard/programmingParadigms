@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
+from ast import Module
 from Sorter import *
-from Filter import *
+from Filterer import *
 from Averager import *
 
 from random import shuffle, random
@@ -8,37 +9,48 @@ from random import shuffle, random
 #random generator
 squares = list(n * n for n in range(10000))
 shuffle(squares)
-# Test: print(squares)
+#print(squares)
 evens = list(n * 2 for n in range(500))
-shuffle(evens)
-# Test: print(evens)
+#shuffle(evens)
+#print(evens)
 floats = list (random() for n in range(200))
-# Test: print (floats)
+#print (floats)
 
-class Sorter(ABC):
-    def _init_(self):
-        super()._init_()
 
-class Filterer(ABC):
-    def _init_(self):
-        super()._init_()
-
-class Averager(ABC):
-    def _init_(self):
-        super()._init_()
 
 class DataSet(ABC):
-    def _init_(self,Sorter,Filterer,Averager):
-        super()._init()
+    def __init__(self,array,Sorter,Filterer,Averager):
+        super().__init__()
+        self.array = array
         self.sort = Sorter
         self.filter = Filterer
         self.average = Averager
-    @abstractmethod
     def sort(self):
-        self.sort.sort()
+        self.sort(self.array)
     def filter(self):
-        self.filter.filter()
+        self.filter(self.array,1000)
     def average(self):
-        self.average.average()
+        self.average(self.array)
+
+class DataSets():
+    def __init__(self):
+        self.list = []
+        self.list.append(DataSet(self.create_dataset,QuickSort,Minimum,Mean))
+
+    def create_dataset(self):
+        array = shuffle(list(n * n for n in range(10000)))
+        return array
+
+        #list.append(DataSet(QuickSort,Minimum,Mean))
+        #list.append(DataSet(QuickSort,Minimum,Mode))
+        #list.append(DataSet(QuickSort,Maximum,Mean))
+        #list.append(DataSet(QuickSort,Maximum,Mode))
+        #list.append(DataSet(InsertionSort,Maximum,Mode))
+        #list.append(DataSet(InsertionSort,Minimum,Mode))
+        
+
+sets = DataSets()
+print(sets.list[0])
+
 
     
