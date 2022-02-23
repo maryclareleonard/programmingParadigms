@@ -14,21 +14,25 @@ class DataSet(ABC):
         self.filterer = Filterer
         self.averager = Averager
     def sort(self):
+        self.sorter.explain(self) 
         self.sorter.sort(self)
+        
     def filter(self):
-        self.filterer.filter(self,self.array,50)
+        self.filterer.filter(self,self.array,255)
     def average(self):
         self.averager.average(self,self.array)
 
 class DataSets():
     def __init__(self):
         self.list = []
-        self.list.append(DataSet(self.create_dataset(),QuickSort,Minimum,Mean))
-        self.list.append(DataSet(self.create_dataset(),QuickSort,Maximum,Mean))
+        #create list of dataset objects
+        self.list.append(DataSet(self.create_dataset(),BubbleSort,Minimum,Mean))
+        self.list.append(DataSet(self.create_dataset(),BubbleSort,Maximum,Mean))
         self.list.append(DataSet(self.create_dataset(),InsertionSort,Minimum,Mean))
         self.list.append(DataSet(self.create_dataset(),InsertionSort,Minimum,Median))
         self.list.append(DataSet(self.create_dataset(),InsertionSort,Minimum,Mode))
     
+    #print details by calling each behavior - print statements in behaviors
     def print(self):
         for i in range(len(self.list)):
             print("Array {}:".format(i))
@@ -38,8 +42,9 @@ class DataSets():
             self.list[i].filter()
             print() 
 
+    #create dataset of random ordered
     def create_dataset(self):
-        squares = list(n * n for n in range(15))
+        squares = list(n * n for n in range(25))
         shuffle(squares)    
         return squares
         

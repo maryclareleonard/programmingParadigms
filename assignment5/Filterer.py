@@ -13,7 +13,7 @@ class Minimum(Filterer):
         for i in array:
             if i > num:
                 list.append(i)
-        print("The numbers above the minimum of {} are {}".format(num,list))
+        print("Filterer:     The numbers above the minimum of {} are {}".format(num,list))
 
 class Maximum(Filterer):
     def filter(self,array,num):
@@ -21,4 +21,4 @@ class Maximum(Filterer):
         for i in array:
             if i < num:
                 list.append(i)
-        print("The numbers below the maximum of {} are {}".format(num,list))
+        print("Filterer:     The numbers below the maximum of {} are {}".format(num,list))
