@@ -1,20 +1,6 @@
 # Animal behavior hierarchies 
 from abc import ABC, abstractmethod
 from random import randint  
-import tkinter as tk
-
-#buttons for all three animals
-self.button1 = tk.Button(self.button_frame, text="Snake", command=self.createSnake)
-self.button1.grid(row=0, column=1, sticky="ew")
-
-self.button2 = tk.Button(self.button_frame, text="Caterpillar", command=self.createCaterpillar)
-self.button2.grid(row=0, column=2, sticky="ew")
-
-self.button3 = tk.Button(self.button_frame, text="Worm", command=self.createWorm)
-self.button3.grid(row=0, column=3, sticky="ew")
-
-
-
 class AnimalBehavior(ABC): 
     def __init__(self):
         super().__init__()
@@ -54,6 +40,7 @@ class Snake(AnimalBehavior):
         return 1
     def getFood(self):
         return "red"
+    
 
 class Caterpillar(AnimalBehavior): 
     def getColor(self):
