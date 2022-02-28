@@ -20,8 +20,8 @@ class AnimalBehavior(ABC):
         pass
 		
     def moveHead(self,x,y):
-        self.x = x
-        self.y = y	
+        self.head_x = x
+        self.head_y = y	
         
     def setStartingPosition(self,width,height):
         self.head_x = randint(0, width)

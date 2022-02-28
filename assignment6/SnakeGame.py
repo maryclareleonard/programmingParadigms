@@ -41,6 +41,8 @@ class Grid:
         ######################################################################
         master.bind("<Down>", self.handle_down_key)
         master.bind("<Up>", self.handle_up_key)
+        master.bind("<Right>", self.handle_right_key)
+        master.bind("<Left>", self.handle_left_key)
 
         
         # ####################################################################
@@ -55,9 +57,16 @@ class Grid:
     # TO DO: You need to make the move method actuall move the snake!
     def move(self):
         if (self.keypressed == 1):
+            self.animalType.moveHead(self.animalType.getX(),self.animalType.getY()-1)
+            self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
+            self.fillGrid(self.matrix) 
             print("Move up")
+        if (self.keypressed == 2):
+            print("Move right")
         elif (self.keypressed == 3):
             print ("Move down")
+        elif (self.keypressed == 4):
+            print ("Move left")
             
         # After 1 second, call scanning again (create a recursive loop)
         # This construct is very important because it allows the system to
@@ -96,13 +105,13 @@ class Grid:
     
     def createCaterpillar(self):
         self.animalType = Caterpillar()
-        self.animalType = setStartingPosition(self.width,self.height) #send dimensions of grid
+        self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
         self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
         self.fillGrid(self.matrix)
 
     def createWorm(self):
         self.animalType = Worm()
-        self.animalType = setStartingPosition(self.width,self.height) #send dimensions of grid
+        self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
         self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
         self.fillGrid(self.matrix)
         
