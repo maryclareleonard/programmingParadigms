@@ -33,7 +33,7 @@ class Grid:
         self.canvas.pack()    
 
         # Setup a matrix to track the current state of each grid
-        self.matrix = [[0 for x in range(self.height+1)] for y in range(self.width+1)] 
+        #self.matrix = [[0 for x in range(self.height+1)] for y in range(self.width+1)] 
         
         ######################################################################
         # bind arrow keys to handlers
@@ -49,18 +49,29 @@ class Grid:
         # IF YOU HAVE TIME replace this coarse-grained update with a more fine-grained change mechanism
         # Your game will be much less jerky if you do that.
         ######################################################################
-        self.fillGrid(self.matrix)
+        #self.fillGrid(self.matrix)
         
+    def drawAnimal(self, changeX, changeY):
+        self.animalType.setPositions(changeX,changeY)
+        for i in range(self.animalType.getLength()):
+            self.placeMarker(self.animalType.getPositions()[i][0],(self.animalType.getPositions()[i][1]))
+
     # Special move function.  
     # Snakes game requires us to keep moving in one direction until we 
     # press another key (a bit of a pain to figure out)
     # TO DO: You need to make the move method actuall move the snake!
     def move(self):
         if (self.keypressed == 1):
-            self.animalType.moveHead(self.animalType.getX(),self.animalType.getY()-1)
-            self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
-            self.fillGrid(self.matrix) 
-            print("Move up")
+            changeX = 0
+            changeY = 1
+            #self.animalType.moveHead(self.animalType.getX(),self.animalType.getY())
+            #self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
+            #self.fillGrid(self.matrix) 
+            self.drawAnimal(changeX,changeY)
+            #for i in range(self.animalType.getLength()):
+            #    self.placeMarker(self.animalType.getPositions()[i][0],(self.animalType.getPositions()[i][1]))
+            #print(self.animalType.getPositions())
+            #print("Move up")
         if (self.keypressed == 2):
             print("Move right")
         elif (self.keypressed == 3):
@@ -100,8 +111,9 @@ class Grid:
         # Place the 'snake'
         self.animalType = Snake() 
         self.animalType.setStartingPosition(self.width,self.height) #Send the dimensions of the grid
-        self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
-        self.fillGrid(self.matrix) 
+        #self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
+        self.drawAnimal(0,1)
+        #self.fillGrid(self.matrix) 
     
     def createCaterpillar(self):
         self.animalType = Caterpillar()
@@ -127,13 +139,13 @@ class Grid:
 	
     # Fills the grid given an underlying 2D array where cells are marked 1 if a snake 
     # is present, and 0 otherwise.    
-    def fillGrid(self,matrix): #This is more for testing as it is uneconomical
-        for w in range(self.width+1):
-            for h in range(self.height+1):
-                if matrix[w][h] == 1:
-                    self.placeMarker(w,h)
-                else:
-                    self.clearMarker(w,h)				
+    #def fillGrid(self,matrix): #This is more for testing as it is uneconomical
+    #    for w in range(self.width+1):
+    #        for h in range(self.height+1):
+    #            if matrix[w][h] == 1:
+    #               self.placeMarker(w,h)
+    #            else:
+    #                self.clearMarker(w,h)				
 
     # Clears one marker from the grid
     # If you want to use this function you will need to ALSO add an update to the underlying matrix
