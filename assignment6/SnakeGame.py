@@ -51,14 +51,14 @@ class Grid:
         ######################################################################
         #self.fillGrid(self.matrix)
         
-    def drawAnimal(self, changeX, changeY):
+    def drawAnimal(self):
         for i in range(self.animalType.getLength()):
-            print(i)
-            print(self.animalType.getPositions())
-            print('herex')
+            #print(self.animalType.getPositions())
             self.placeMarker(self.animalType.getPositions()[i][0],(self.animalType.getPositions()[i][1]))
-            print()
 
+    def GAMEOVER(self): 
+        #print("You went out of bounds!")
+        exit()
     # Special move function.  
     # Snakes game requires us to keep moving in one direction until we 
     # press another key (a bit of a pain to figure out)
@@ -67,20 +67,21 @@ class Grid:
         if (self.keypressed == 1):
             changeX = 0
             changeY = -1
-            #self.animalType.moveHead(self.animalType.getX(),self.animalType.getY())
-            #self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
-            #self.fillGrid(self.matrix) 
-            self.animalType.moveHead(changeX,changeY)
-            self.drawAnimal(0,0)
-            self.clearMarker
-            #for i in range(self.animalType.getLength()):
-            #    self.placeMarker(self.animalType.getPositions()[i][0],(self.animalType.getPositions()[i][1]))
-            #print(self.animalType.getPositions())
-            #print("Move up")
+            clearMrk = self.animalType.moveHead(changeX,changeY)
+            if (self.animalType.outOfBounds()):
+                self.GAMEOVER()
+            self.clearMarker(clearMrk)
+            self.drawAnimal()
         if (self.keypressed == 2):
             print("Move right")
         elif (self.keypressed == 3):
-            print ("Move down")
+            changeX = 0
+            changeY = 1
+            clearMrk = self.animalType.moveHead(changeX,changeY)
+            if (self.animalType.outOfBounds()):
+                self.GAMEOVER()
+            self.clearMarker(clearMrk)
+            self.drawAnimal() 
         elif (self.keypressed == 4):
             print ("Move left")
             
@@ -118,7 +119,7 @@ class Grid:
         self.animalType.setStartingPosition(self.width,self.height) #Send the dimensions of the grid
         self.animalType.setPositions(0,1)
         #self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
-        self.drawAnimal(0,1)
+        self.drawAnimal()
         #self.fillGrid(self.matrix) 
     
     def createCaterpillar(self):
@@ -145,7 +146,10 @@ class Grid:
 	
     # Clears one marker from the grid
     # If you want to use this function you will need to ALSO add an update to the underlying matrix
-    def clearMarker(self,x,y):
+    def clearMarker(self,clearMrk):
+        #print(clearMrk)
+        x = clearMrk[0]
+        y = clearMrk[1]
         x1 = (x-1) * self.rectangle_size
         y1 = (y-1) * self.rectangle_size
         self.canvas.create_rectangle(x1,y1, x1+self.rectangle_size, y1+self.rectangle_size, fill="white")
@@ -154,10 +158,10 @@ class Grid:
     # Places one marker on the grid
     # If you want to use this function you will need to also update the underlying matrix    
     def placeMarker(self,x,y):
-        print("in place marker")
-        print(x)
+        #print("in place marker")
+        #print(x)
         x1 = (x-1) * self.rectangle_size
-        print(y)
+        #print(y)
         y1 = (y-1) * self.rectangle_size
         self.canvas.create_rectangle(x1,y1, x1+self.rectangle_size, y1+self.rectangle_size, fill=self.animalType.getColor()) #"blue")
         self.canvas.pack()
