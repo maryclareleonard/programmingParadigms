@@ -52,9 +52,12 @@ class Grid:
         #self.fillGrid(self.matrix)
         
     def drawAnimal(self, changeX, changeY):
-        self.animalType.setPositions(changeX,changeY)
         for i in range(self.animalType.getLength()):
+            print(i)
+            print(self.animalType.getPositions())
+            print('herex')
             self.placeMarker(self.animalType.getPositions()[i][0],(self.animalType.getPositions()[i][1]))
+            print()
 
     # Special move function.  
     # Snakes game requires us to keep moving in one direction until we 
@@ -63,11 +66,13 @@ class Grid:
     def move(self):
         if (self.keypressed == 1):
             changeX = 0
-            changeY = 1
+            changeY = -1
             #self.animalType.moveHead(self.animalType.getX(),self.animalType.getY())
             #self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
             #self.fillGrid(self.matrix) 
-            self.drawAnimal(changeX,changeY)
+            self.animalType.moveHead(changeX,changeY)
+            self.drawAnimal(0,0)
+            self.clearMarker
             #for i in range(self.animalType.getLength()):
             #    self.placeMarker(self.animalType.getPositions()[i][0],(self.animalType.getPositions()[i][1]))
             #print(self.animalType.getPositions())
@@ -111,6 +116,7 @@ class Grid:
         # Place the 'snake'
         self.animalType = Snake() 
         self.animalType.setStartingPosition(self.width,self.height) #Send the dimensions of the grid
+        self.animalType.setPositions(0,1)
         #self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
         self.drawAnimal(0,1)
         #self.fillGrid(self.matrix) 
@@ -137,16 +143,6 @@ class Grid:
         for i in range(0, self.height*self.rectangle_size, self.rectangle_size):
             self.canvas.create_line([(0, i), (self.width*self.rectangle_size, i)])
 	
-    # Fills the grid given an underlying 2D array where cells are marked 1 if a snake 
-    # is present, and 0 otherwise.    
-    #def fillGrid(self,matrix): #This is more for testing as it is uneconomical
-    #    for w in range(self.width+1):
-    #        for h in range(self.height+1):
-    #            if matrix[w][h] == 1:
-    #               self.placeMarker(w,h)
-    #            else:
-    #                self.clearMarker(w,h)				
-
     # Clears one marker from the grid
     # If you want to use this function you will need to ALSO add an update to the underlying matrix
     def clearMarker(self,x,y):
@@ -158,7 +154,10 @@ class Grid:
     # Places one marker on the grid
     # If you want to use this function you will need to also update the underlying matrix    
     def placeMarker(self,x,y):
+        print("in place marker")
+        print(x)
         x1 = (x-1) * self.rectangle_size
+        print(y)
         y1 = (y-1) * self.rectangle_size
         self.canvas.create_rectangle(x1,y1, x1+self.rectangle_size, y1+self.rectangle_size, fill=self.animalType.getColor()) #"blue")
         self.canvas.pack()
