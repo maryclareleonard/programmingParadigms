@@ -57,14 +57,14 @@ class Grid:
             self.placeMarker(self.animalType.getPositions()[i][0],(self.animalType.getPositions()[i][1]))
 
     def GAMEOVER(self): 
-        #print("You went out of bounds!")
+        print("You went out of bounds!")
         exit()
     # Special move function.  
     # Snakes game requires us to keep moving in one direction until we 
     # press another key (a bit of a pain to figure out)
     # TO DO: You need to make the move method actuall move the snake!
     def move(self):
-        if (self.keypressed == 1):
+        if (self.keypressed == 1):      #up
             changeX = 0
             changeY = -1
             clearMrk = self.animalType.moveHead(changeX,changeY)
@@ -72,9 +72,16 @@ class Grid:
                 self.GAMEOVER()
             self.clearMarker(clearMrk)
             self.drawAnimal()
-        if (self.keypressed == 2):
-            print("Move right")
-        elif (self.keypressed == 3):
+        if (self.keypressed == 2):      #right
+            changeX = 1
+            changeY = 0
+            self.animalType.setIsBent(1); 
+            clearMrk = self.animalType.moveHead(changeX,changeY)
+            if (self.animalType.outOfBounds()):
+                self.GAMEOVER()
+            self.clearMarker(clearMrk)
+            self.drawAnimal()
+        elif (self.keypressed == 3):    #down
             changeX = 0
             changeY = 1
             clearMrk = self.animalType.moveHead(changeX,changeY)
@@ -82,7 +89,7 @@ class Grid:
                 self.GAMEOVER()
             self.clearMarker(clearMrk)
             self.drawAnimal() 
-        elif (self.keypressed == 4):
+        elif (self.keypressed == 4):    #left
             print ("Move left")
             
         # After 1 second, call scanning again (create a recursive loop)
@@ -118,21 +125,20 @@ class Grid:
         self.animalType = Snake() 
         self.animalType.setStartingPosition(self.width,self.height) #Send the dimensions of the grid
         self.animalType.setPositions(0,1)
-        #self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
         self.drawAnimal()
-        #self.fillGrid(self.matrix) 
+        
     
     def createCaterpillar(self):
         self.animalType = Caterpillar()
         self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
-        self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
-        self.fillGrid(self.matrix)
+        self.animalType.setPositions(0,1)
+        self.drawAnimal()
 
     def createWorm(self):
         self.animalType = Worm()
         self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
-        self.matrix[self.animalType.getX()][self.animalType.getY()] = 1
-        self.fillGrid(self.matrix)
+        self.animalType.setPositions(0,1)
+        self.drawAnimal()
         
     # Draws the grid
     def drawGrid(self):

@@ -8,7 +8,7 @@ class AnimalBehavior(ABC):
         self.head_y = 0
         self.length = 3     #added to track length of the snake 
         self.positions = [ [0] * 2]* 10  # 2 x 10 array with 0s
-        #print(self.positions)
+        self.isBent = 0     #for direction change of animal
             
     @abstractmethod
     def getColor(self):
@@ -27,6 +27,12 @@ class AnimalBehavior(ABC):
 
     def getPositions(self):
         return self.positions
+
+    def getIsBent(self):
+        return self.isBent
+
+    def setIsBent(self, setVar):
+        self.isBent = setVar
 
     def setStartingPosition(self,width,height):
         self.head_x = randint(0, width)
@@ -47,8 +53,7 @@ class AnimalBehavior(ABC):
                 self.positions[i] = [self.head_x + i*xdelta, self.head_y + i*ydelta]
         #print(self.positions)
 		
-    def moveHead(self,changeX, changeY):
-        clearMrk = [self.head_x, self.head_y]
+    def moveNotBent(self,changeX, changeY):
         self.head_x = self.head_x + changeX
         self.head_y = self.head_y + changeY 
         for i in range(self.length):
@@ -58,6 +63,29 @@ class AnimalBehavior(ABC):
                 clearMrk = self.positions[i]
             self.positions[i] = [self.positions[i][0] + changeX, self.positions[i][1] + changeY]
         return clearMrk
+    
+    def moveBent(self,changeX, changeY):
+        self.head_x = self.head_x + changeX
+        self.head_y = self.head_y + changeY 
+        print("in move bent")
+        for i in range(self.length):
+            if (i == 0 and (changeY > 0 or changeX > 0)): 
+                clearMrk = self.positions[i]
+            if (i == self.length-1 and (changeY < 0 or changeX < 0)):
+                clearMrk = self.positions[i]
+            
+            #self.positions[i] = [self.positions[i][0] + , self.positions[i][1] + changeX]
+        print(self.positions)
+        return clearMrk
+
+    def moveHead(self,changeX, changeY):
+        if (self.getIsBent()):
+            clearMrk = self.moveBent(changeX,changeY)
+        else:
+            clearMrk = self.moveNotBent(changeX,changeY)
+        return clearMrk
+
+    
         
     def outOfBounds(self):
        for i in range(self.length):
