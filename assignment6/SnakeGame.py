@@ -75,10 +75,11 @@ class Grid:
         if (self.keypressed == 2):      #right
             changeX = 1
             changeY = 0
-            self.animalType.setIsBent(1); 
+            self.animalType.setIsBent(1)
             clearMrk = self.animalType.moveHead(changeX,changeY)
             if (self.animalType.outOfBounds()):
                 self.GAMEOVER()
+            print("clear: %s", clearMrk)
             self.clearMarker(clearMrk)
             self.drawAnimal()
         elif (self.keypressed == 3):    #down
@@ -91,6 +92,15 @@ class Grid:
             self.drawAnimal() 
         elif (self.keypressed == 4):    #left
             print ("Move left")
+            changeX = -1
+            changeY = 0
+            self.animalType.setIsBent(1)
+            clearMrk = self.animalType.moveHead(changeX,changeY)
+            if (self.animalType.outOfBounds()):
+                self.GAMEOVER()
+            print("clear: %s", clearMrk)
+            self.clearMarker(clearMrk)
+            self.drawAnimal()
             
         # After 1 second, call scanning again (create a recursive loop)
         # This construct is very important because it allows the system to
