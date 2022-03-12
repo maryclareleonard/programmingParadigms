@@ -8,6 +8,10 @@ class AnimalBehavior(ABC):
         self.head_y = 0
         self.length = 3     #added to track length of the snake 
         self.positions = [ [0] * 2]* 3  # 2 x 10 array with 0s
+        self.steps = 0
+        self.meals = 0
+        self.foodX = 0
+        self.foodY = 0
             
     @abstractmethod
     def getColor(self):
@@ -36,6 +40,16 @@ class AnimalBehavior(ABC):
     def setStartingPosition(self,width,height):
         self.head_x = randint(0, width)
         self.head_y = randint(0, height)
+
+    def setFood(self,width,height):
+        self.foodX = randint(0, width)
+        self.foodY = randint(0, height) 
+
+    def getFoodX(self):
+        return self.foodX
+
+    def getFoodY(self): 
+        return self.foodY
         
     def getX(self):
         return self.head_x
@@ -52,12 +66,25 @@ class AnimalBehavior(ABC):
                 self.positions[i] = [self.head_x + i*xdelta, self.head_y + i*ydelta]
         #print(self.positions)
 		
+    def checkSteps(self):
+        if self.steps == 20:
+            print("CHANGE STATE")
+        if self.steps == 40:
+            print("CHANGE STATE")
+        if self.meals == 3:
+            print("CHANGE STATE")
+        if self.meals == 5:
+           print("CHANGE STATE") 
+
     def move(self,changeX, changeY):
         self.head_x = self.head_x + changeX
         self.head_y = self.head_y + changeY 
         newPos = [(self.positions[0][0] + changeX), (self.positions[0][1] + changeY)]
         self.positions.insert(0,newPos)
         clearMrk = self.positions[-1]
+        self.steps = self.steps + 1
+        print(self.steps)
+        self.checkSteps()
         del self.positions[-1]
         return clearMrk
 

@@ -55,7 +55,11 @@ class Grid:
         for i in range(self.animalType.getLength()):
             #print(self.animalType.getPositions())
             self.placeMarker(self.animalType.getPositions()[i][0],(self.animalType.getPositions()[i][1]))
-
+ 
+    def drawFood(self):
+        self.placeCircle(self.animalType.getFoodX(),self.animalType.getFoodY())
+        
+    
     def GAMEOVER(self): 
         print("You went out of bounds!")
         exit()
@@ -133,9 +137,13 @@ class Grid:
     def createSnake(self):
         # Place the 'snake'
         self.animalType = Snake() 
+        #set positioning of animal // draw
         self.animalType.setStartingPosition(self.width,self.height) #Send the dimensions of the grid
         self.animalType.setPositions(0,1)
         self.drawAnimal()
+         #set positioning of food // draw
+        self.animalType.setFood(self.width,self.height)
+        self.drawFood()
         
     
     def createCaterpillar(self):
@@ -180,6 +188,16 @@ class Grid:
         #print(y)
         y1 = (y-1) * self.rectangle_size
         self.canvas.create_rectangle(x1,y1, x1+self.rectangle_size, y1+self.rectangle_size, fill=self.animalType.getColor()) #"blue")
+        self.canvas.pack()
+
+    #for food
+    def placeCircle(self,x,y):
+        #print("in place marker")
+        #print(x)
+        x1 = (x-1) * self.rectangle_size
+        #print(y)
+        y1 = (y-1) * self.rectangle_size
+        self.canvas.create_oval(x1,y1, x1+self.rectangle_size, y1+self.rectangle_size, fill="blue")
         self.canvas.pack()
 
 def main(): #run mainloop 
