@@ -165,9 +165,6 @@ class AnimalBehavior(ABC):
                 a = self.positions[j][0]
                 b = self.positions[j][1]  
                 if x == a and y == b:
-                    print(self.positions)
-                    print(x,y)
-                    print(a,b)
                     return 1
                 else:
                     continue
