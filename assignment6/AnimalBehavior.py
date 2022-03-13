@@ -78,9 +78,9 @@ class AnimalBehavior(ABC):
 
     def setFood(self,width,height):
         # - 2 to avoid food being out of grid bounds
-        self.foodX = randint(6, width-6)
-        self.foodY = randint(6, height-6) 
-        print("Food at ", self.foodX, " ", self.foodY)
+        self.foodX = randint(2, width-2)
+        self.foodY = randint(2, height-2) 
+        #print("Food at ", self.foodX, " ", self.foodY)
 
     def getFoodX(self):
         return self.foodX
@@ -156,10 +156,6 @@ class AnimalBehavior(ABC):
 
     def outOfBounds(self):
        for i in range(self.length-1):
-            # print(i)
-            # print(self.positions)
-            # print(self.length)
-            # print(self.positions[i])
             x = self.positions[i][0]
             y = self.positions[i][1] 
             if ( x < 1 or x > 24):
@@ -168,6 +164,21 @@ class AnimalBehavior(ABC):
                 return 1
             else:
                 continue
+
+    def hitSelf(self):
+        for i in range(self.length-1):
+            x = self.positions[i][0]
+            y = self.positions[i][1] 
+            for j in range(i+1,self.length-1):
+                a = self.positions[j][0]
+                b = self.positions[j][1]  
+                if x == a and y == b:
+                    print(self.positions)
+                    print(x,y)
+                    print(a,b)
+                    return 1
+                else:
+                    continue
 
 class State(ABC):
     def __init__(self,animalBehavior):

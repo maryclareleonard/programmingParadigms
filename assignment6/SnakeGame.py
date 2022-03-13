@@ -63,7 +63,6 @@ class Grid:
         
     
     def GAMEOVER(self): 
-        print("You went out of bounds!")
         print("Your Total Meals Eaten: ", self.animalType.eatenTotal)
         exit()
     # Special move function.  
@@ -97,6 +96,10 @@ class Grid:
             #print("DRAWING FOOD")
             self.drawFood()
         if (self.animalType.outOfBounds()):
+            print("You went out of bounds!")
+            self.GAMEOVER()
+        if (self.animalType.hitSelf()):
+            print("You hit yourself!")
             self.GAMEOVER()
         self.clearMarker(clearMrk)
         self.drawAnimal()
