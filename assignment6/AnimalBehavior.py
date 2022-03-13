@@ -100,16 +100,13 @@ class AnimalBehavior(ABC):
         print("Step Count: ", self.steps)
         print("Meal Count", self.meals)
         if self.steps == 20:
-            if self.meals > 0:
-                if self.getContentState():
-                    self.setState(self.hungry)
-                    self.meals = 0 #start tracking meals
-                elif self.getEngorgedState():
-                    self.setState(self.content)
-                    self.steps = 0 #start tracking steps 
-                    self.meals = 0 #start tracking meals
-            else:
-                self.steps = 0 #reset counter
+            if self.getContentState():
+                self.setState(self.hungry)
+                self.meals = 0 #start tracking meals
+            elif self.getEngorgedState():
+                self.setState(self.content)
+                self.steps = 0 #start tracking steps 
+                self.meals = 0 #start tracking meals
         if self.meals == 3:
             if self.getContentState():
                 self.setState(self.engorged)
