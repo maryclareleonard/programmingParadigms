@@ -1,6 +1,5 @@
 # Animal behavior hierarchies 
 from abc import ABC, abstractmethod
-from state2 import State
 from random import randint  
 class AnimalBehavior(ABC): 
     def __init__(self):
@@ -13,12 +12,13 @@ class AnimalBehavior(ABC):
         self.meals = 0
         self.foodX = 0
         self.foodY = 0
-        self.state = 0 
-            
-    #state materials
-    @abstractmethod
-    def printNewStatus(self):
-        pass
+
+        self.content = Content(self)
+        self.hungry = Hungry(self)
+        self.engorged = Engorged(self)
+
+        self.state = self.content
+        
 
     #strategy materials
     @abstractmethod
@@ -33,6 +33,31 @@ class AnimalBehavior(ABC):
     def getFood(self):
         pass
 
+    def setState(self,newState):
+        print("newState", newState)
+        self.state = newState
+
+    def getContentState(self):
+        if self.state == self.content:
+            return 1
+        else:
+            return 0
+
+    def getHungryState(self):
+        if self.state == self.hungry:
+            return 1
+        else:
+            return 0
+
+    def getEngorgedState(self):
+        if self.state == self.engorged:
+            return 1
+        else:
+            return 0
+
+    def printStatus(self):
+        self.state.printStatus()
+
     def getLength(self):
         return self.length
 
@@ -46,12 +71,15 @@ class AnimalBehavior(ABC):
         self.isBent = setVar
 
     def setStartingPosition(self,width,height):
-        self.head_x = randint(0, width)
-        self.head_y = randint(0, height)
+        # - 4 to avoid snake being out of grid bounds to start
+        self.head_x = randint(3, width-3)
+        self.head_y = randint(3, height-3)
 
     def setFood(self,width,height):
-        self.foodX = randint(0, width)
-        self.foodY = randint(0, height) 
+        # - 2 to avoid food being out of grid bounds
+        self.foodX = randint(6, width-6)
+        self.foodY = randint(6, height-6) 
+        print("Food at ", self.foodX, " ", self.foodY)
 
     def getFoodX(self):
         return self.foodX
@@ -75,14 +103,28 @@ class AnimalBehavior(ABC):
         #print(self.positions)
 		
     def checkSteps(self):
+        self.printStatus()
+        print("Step Count: ", self.steps)
+        print("Meal Count", self.meals)
         if self.steps == 20:
-            print("CHANGE STATE")
-        if self.steps == 40:
-            print("CHANGE STATE")
+            if self.meals > 0:
+                if self.getContentState():
+                    self.setState(self.hungry)
+                    self.meals = 0 #start tracking meals
+                elif self.getEngorgedState():
+                    self.setState(self.content)
+                    self.steps = 0 #start tracking steps 
+                    self.meals = 0 #start tracking meals
+            else:
+                self.steps = 0 #reset counter
         if self.meals == 3:
-            print("CHANGE STATE")
+            if self.getContentState():
+                self.setState(self.engorged)
+                self.steps = 0 #start tracking steps
         if self.meals == 5:
-           print("CHANGE STATE") 
+            if self.getHungryState():
+                self.setState(self.engorged)
+                self.steps = 0 #start tracking steps
 
     def move(self,changeX, changeY):
         #print("MOVE")
@@ -95,8 +137,9 @@ class AnimalBehavior(ABC):
         self.steps = self.steps + 1
         self.checkSteps()
         if eaten:
-            print()
             self.length = self.length + 1
+            self.meals = self.meals + 1
+            self.steps = 0 #reset steps since just eaten
         else: 
             del self.positions[-1]
             
@@ -123,17 +166,42 @@ class AnimalBehavior(ABC):
                 return 1
             else:
                 continue
-            
+
+class State(ABC):
+    def __init__(self,animalBehavior):
+        self.animalBehavior = animalBehavior
+    def setState(self,newState):
+        self.state = newState
+    #state materials
+    @abstractmethod
+    def printStatus(self):
+        pass
+    # @abstractmethod
+    # def returnState(self):
+    #     pass
+
+    
 class Content(State):
-    def printNewStatus(self):
+    def __init__(self, animal_behavior):
+        super().__init__(animal_behavior)
+        
+    def printStatus(self):
         print("Happy as a clam!!")
+    def returnState(self):
+        print("CONTENT")
+
 class Engorged(State):
-    def printNewStatus(self):
+    def printStatus(self):
         print("GOSH I'm stuffed.")
+    def returnState(self):
+        print("ENGORGED")
 
 class Hungry(State):      
-    def printNewStatus(self):
+    def printStatus(self):
         print("I NEED Food!!")      
+    def returnState(self):
+        print("HUNGRY")
+
 class Snake(AnimalBehavior): 
     def getColor(self):
         return "green"
@@ -179,3 +247,5 @@ class Worm(AnimalBehavior):
         pass
     def changeToHungry(self):
         pass
+
+
