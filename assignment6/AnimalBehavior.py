@@ -35,7 +35,6 @@ class AnimalBehavior(ABC):
         pass
 
     def setState(self,newState):
-        print("newState", newState)
         self.state = newState
 
     def getContentState(self):
@@ -65,12 +64,6 @@ class AnimalBehavior(ABC):
     def getPositions(self):
         return self.positions
 
-    def getIsBent(self):
-        return self.isBent
-
-    def setIsBent(self, setVar):
-        self.isBent = setVar
-
     def setStartingPosition(self,width,height):
         # - 4 to avoid snake being out of grid bounds to start
         self.head_x = randint(3, width-3)
@@ -80,7 +73,6 @@ class AnimalBehavior(ABC):
         # - 2 to avoid food being out of grid bounds
         self.foodX = randint(2, width-2)
         self.foodY = randint(2, height-2) 
-        #print("Food at ", self.foodX, " ", self.foodY)
 
     def getFoodX(self):
         return self.foodX
@@ -94,15 +86,15 @@ class AnimalBehavior(ABC):
     def getY(self):
         return self.head_y
 
+    #set positioning for snake body
     def setPositions(self, xdelta, ydelta):
         for i in range(self.length):
             if i == 0:
                 self.positions[0] = [self.head_x,self.head_y]
-                #print(self.positions)
             else: 
                 self.positions[i] = [self.head_x + i*xdelta, self.head_y + i*ydelta]
-        #print(self.positions)
 		
+    # for state determination
     def checkSteps(self):
         self.printStatus()
         print("Step Count: ", self.steps)
@@ -127,29 +119,29 @@ class AnimalBehavior(ABC):
                 self.setState(self.engorged)
                 self.steps = 0 #start tracking steps
 
+    #move snake around board
     def move(self,changeX, changeY):
-        #print("MOVE")
         self.head_x = self.head_x + changeX
         self.head_y = self.head_y + changeY 
         newPos = [(self.positions[0][0] + changeX), (self.positions[0][1] + changeY)]
-        self.positions.insert(0,newPos)
-        eaten = self.checkEat(newPos)
-        clearMrk = self.positions[-1]
+        self.positions.insert(0,newPos) #insert new head
+        eaten = self.checkEat(newPos) #check if food was just erased (by snake)
+        clearMrk = self.positions[-1] #clear marker at this location
         self.steps = self.steps + 1
-        self.checkSteps()
+        self.checkSteps() # state logic
         if eaten:
             self.length = self.length + 1
             self.meals = self.meals + 1
             self.eatenTotal = self.eatenTotal + 1 #will not be reset for state purposes
             self.steps = 0 #reset steps since just eaten
+            #don't delete so snake extends
         else: 
-            del self.positions[-1]
+            del self.positions[-1] #if nothing eaten, delete last element
             
         return [clearMrk, eaten]
 
     def checkEat(self,newPos):
         if (newPos[0] == self.getFoodX()) and (newPos[1] == self.getFoodY()):
-            print("EATEN")
             return 1
         else:
             return 0
@@ -185,14 +177,9 @@ class State(ABC):
         self.animalBehavior = animalBehavior
     def setState(self,newState):
         self.state = newState
-    #state materials
     @abstractmethod
     def printStatus(self):
         pass
-    # @abstractmethod
-    # def returnState(self):
-    #     pass
-
     
 class Content(State):
     def __init__(self, animal_behavior):
@@ -200,20 +187,14 @@ class Content(State):
         
     def printStatus(self):
         print("Happy as a clam!!")
-    def returnState(self):
-        print("CONTENT")
 
 class Engorged(State):
     def printStatus(self):
         print("GOSH I'm stuffed.")
-    def returnState(self):
-        print("ENGORGED")
 
 class Hungry(State):      
     def printStatus(self):
         print("I NEED Food!!")      
-    def returnState(self):
-        print("HUNGRY")
 
 class Snake(AnimalBehavior): 
     def getColor(self):
@@ -222,13 +203,7 @@ class Snake(AnimalBehavior):
         return 750
     def getFood(self):
         return "red"
-    #state materials
-    def changeToContent(self):
-        pass
-    def changeToEngorged(self):
-        pass
-    def changeToHungry(self):
-        pass
+
     
 class Caterpillar(AnimalBehavior): 
     def getColor(self):
@@ -237,13 +212,7 @@ class Caterpillar(AnimalBehavior):
         return 1000
     def getFood(self):
         return "brown"
-    #state materials
-    def changeToContent(self):
-        pass
-    def changeToEngorged(self):
-        pass
-    def changeToHungry(self):
-        pass
+
 		
 class Worm(AnimalBehavior): 
     def getColor(self):
@@ -253,12 +222,5 @@ class Worm(AnimalBehavior):
     def getFood(self):
         return "yellow"
 
-    #state materials
-    def changeToContent(self):
-        pass
-    def changeToEngorged(self):
-        pass
-    def changeToHungry(self):
-        pass
 
 

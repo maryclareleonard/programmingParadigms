@@ -61,7 +61,6 @@ class Grid:
     def drawFood(self):
         self.placeCircle(self.animalType.getFoodX(),self.animalType.getFoodY())
         
-    
     def GAMEOVER(self): 
         print("Your Total Meals Eaten: ", self.animalType.eatenTotal)
         exit()
@@ -91,9 +90,7 @@ class Grid:
             self.keypresses = self.keypresses + 1
         [clearMrk, eaten] = self.animalType.move(changeX,changeY)
         if eaten:
-            #print("HERE")
-            self.animalType.setFood(self.width,self.height)
-            #print("DRAWING FOOD")
+            self.animalType.setFood(self.width,self.height) #set new food coordinates
             self.drawFood()
         if (self.animalType.outOfBounds()):
             print("You went out of bounds!")
@@ -186,7 +183,6 @@ class Grid:
     # Clears one marker from the grid
     # If you want to use this function you will need to ALSO add an update to the underlying matrix
     def clearMarker(self,clearMrk):
-        #print(clearMrk)
         x = clearMrk[0]
         y = clearMrk[1]
         x1 = (x-1) * self.rectangle_size
@@ -197,20 +193,14 @@ class Grid:
     # Places one marker on the grid
     # If you want to use this function you will need to also update the underlying matrix    
     def placeMarker(self,x,y):
-        #print("in place marker")
-        #print(x)
         x1 = (x-1) * self.rectangle_size
-        #print(y)
         y1 = (y-1) * self.rectangle_size
         self.canvas.create_rectangle(x1,y1, x1+self.rectangle_size, y1+self.rectangle_size, fill=self.animalType.getColor()) #"blue")
         self.canvas.pack()
 
     #for food
     def placeCircle(self,x,y):
-        #print("in place marker")
-        #print(x)
         x1 = (x-1) * self.rectangle_size
-        #print(y)
         y1 = (y-1) * self.rectangle_size
         self.canvas.create_oval(x1,y1, x1+self.rectangle_size, y1+self.rectangle_size, fill=self.animalType.getFood())
         self.canvas.pack()
