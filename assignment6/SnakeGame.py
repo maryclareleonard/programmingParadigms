@@ -62,7 +62,7 @@ class Grid:
         
     
     def GAMEOVER(self): 
-        print("You went out of bounds!")
+        #print("You went out of bounds!")
         exit()
     # Special move function.  
     # Snakes game requires us to keep moving in one direction until we 
@@ -90,9 +90,9 @@ class Grid:
             self.keypresses = self.keypresses + 1
         [clearMrk, eaten] = self.animalType.move(changeX,changeY)
         if eaten:
-            print("HERE")
+            #print("HERE")
             self.animalType.setFood(self.width,self.height)
-            print("DRAWING FOOD")
+            #print("DRAWING FOOD")
             self.drawFood()
         if (self.animalType.outOfBounds()):
             self.GAMEOVER()
@@ -172,7 +172,7 @@ class Grid:
     # Clears one marker from the grid
     # If you want to use this function you will need to ALSO add an update to the underlying matrix
     def clearMarker(self,clearMrk):
-        print(clearMrk)
+        #print(clearMrk)
         x = clearMrk[0]
         y = clearMrk[1]
         x1 = (x-1) * self.rectangle_size

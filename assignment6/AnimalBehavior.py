@@ -1,5 +1,6 @@
 # Animal behavior hierarchies 
 from abc import ABC, abstractmethod
+from state2 import State
 from random import randint  
 class AnimalBehavior(ABC): 
     def __init__(self):
@@ -12,16 +13,14 @@ class AnimalBehavior(ABC):
         self.meals = 0
         self.foodX = 0
         self.foodY = 0
-        #self.state = 0 
+        self.state = 0 
             
-    # #state materials
-    # @abstractmethod
-    # def changeToContent(self):
-    #     pass
-    # def changeToEngorged(self):
-    #     pass
-    # def changeToHungry(self):
-    #     pass
+    #state materials
+    @abstractmethod
+    def printNewStatus(self):
+        pass
+
+    #strategy materials
     @abstractmethod
     def getColor(self):
         pass
@@ -86,7 +85,7 @@ class AnimalBehavior(ABC):
            print("CHANGE STATE") 
 
     def move(self,changeX, changeY):
-        print("MOVE")
+        #print("MOVE")
         self.head_x = self.head_x + changeX
         self.head_y = self.head_y + changeY 
         newPos = [(self.positions[0][0] + changeX), (self.positions[0][1] + changeY)]
@@ -112,10 +111,10 @@ class AnimalBehavior(ABC):
 
     def outOfBounds(self):
        for i in range(self.length-1):
-            print(i)
-            print(self.positions)
-            print(self.length)
-            print(self.positions[i])
+            # print(i)
+            # print(self.positions)
+            # print(self.length)
+            # print(self.positions[i])
             x = self.positions[i][0]
             y = self.positions[i][1] 
             if ( x < 1 or x > 24):
@@ -124,6 +123,17 @@ class AnimalBehavior(ABC):
                 return 1
             else:
                 continue
+            
+class Content(State):
+    def printNewStatus(self):
+        print("Happy as a clam!!")
+class Engorged(State):
+    def printNewStatus(self):
+        print("GOSH I'm stuffed.")
+
+class Hungry(State):      
+    def printNewStatus(self):
+        print("I NEED Food!!")      
 class Snake(AnimalBehavior): 
     def getColor(self):
         return "green"
@@ -131,8 +141,14 @@ class Snake(AnimalBehavior):
         return 750
     def getFood(self):
         return "red"
+    #state materials
+    def changeToContent(self):
+        pass
+    def changeToEngorged(self):
+        pass
+    def changeToHungry(self):
+        pass
     
-
 class Caterpillar(AnimalBehavior): 
     def getColor(self):
         return "red"
@@ -140,6 +156,13 @@ class Caterpillar(AnimalBehavior):
         return 1000
     def getFood(self):
         return "green"
+    #state materials
+    def changeToContent(self):
+        pass
+    def changeToEngorged(self):
+        pass
+    def changeToHungry(self):
+        pass
 		
 class Worm(AnimalBehavior): 
     def getColor(self):
@@ -148,3 +171,11 @@ class Worm(AnimalBehavior):
         return 1250
     def getFood(self):
         return "yellow"
+
+    #state materials
+    def changeToContent(self):
+        pass
+    def changeToEngorged(self):
+        pass
+    def changeToHungry(self):
+        pass
