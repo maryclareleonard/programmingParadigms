@@ -12,6 +12,7 @@ class AnimalBehavior(ABC):
         self.meals = 0
         self.foodX = 0
         self.foodY = 0
+        self.eatenTotal = 0
 
         self.content = Content(self)
         self.hungry = Hungry(self)
@@ -139,6 +140,7 @@ class AnimalBehavior(ABC):
         if eaten:
             self.length = self.length + 1
             self.meals = self.meals + 1
+            self.eatenTotal = self.eatenTotal + 1 #will not be reset for state purposes
             self.steps = 0 #reset steps since just eaten
         else: 
             del self.positions[-1]
@@ -204,7 +206,7 @@ class Hungry(State):
 
 class Snake(AnimalBehavior): 
     def getColor(self):
-        return "green"
+        return "black"
     def getSpeed(self):
         return 750
     def getFood(self):
@@ -219,11 +221,11 @@ class Snake(AnimalBehavior):
     
 class Caterpillar(AnimalBehavior): 
     def getColor(self):
-        return "red"
+        return "green"
     def getSpeed(self):
         return 1000
     def getFood(self):
-        return "green"
+        return "brown"
     #state materials
     def changeToContent(self):
         pass

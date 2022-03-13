@@ -31,6 +31,7 @@ class Grid:
         self.button3 = tk.Button(self.button_frame, text="Worm", command=self.createWorm)
         self.button3.grid(row=0, column=3, sticky="ew")
 
+
         self.canvas.pack()    
 
         # Setup a matrix to track the current state of each grid
@@ -62,7 +63,8 @@ class Grid:
         
     
     def GAMEOVER(self): 
-        #print("You went out of bounds!")
+        print("You went out of bounds!")
+        print("Your Total Meals Eaten: ", self.animalType.eatenTotal)
         exit()
     # Special move function.  
     # Snakes game requires us to keep moving in one direction until we 
@@ -128,36 +130,45 @@ class Grid:
     # TO DO: Create the two other animals. 
     ########################################################################
     def createSnake(self):
-        # Place the 'snake'
-        self.animalType = Snake() 
-        #set positioning of animal // draw
-        self.animalType.setStartingPosition(self.width,self.height) #Send the dimensions of the grid
-        self.animalType.setPositions(0,1)
-        self.drawAnimal()
-        #set positioning of food // draw
-        self.animalType.setFood(self.width,self.height)
-        self.drawFood()
+        if self.animalType:
+            print("You already started a game, exit if you would like to play with a new animal")
+        else:
+            # Place the 'snake'
+            self.animalType = Snake() 
+            #set positioning of animal // draw
+            self.animalType.setStartingPosition(self.width,self.height) #Send the dimensions of the grid
+            self.animalType.setPositions(0,1)
+            self.drawAnimal()
+            #set positioning of food // draw
+            self.animalType.setFood(self.width,self.height)
+            self.drawFood()
         
     
     def createCaterpillar(self):
-        self.animalType = Caterpillar()
-        #set positioning of animal // draw
-        self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
-        self.animalType.setPositions(0,1)
-        self.drawAnimal()
-        #set positioning of food // draw
-        self.animalType.setFood(self.width,self.height)
-        self.drawFood()
+        if self.animalType:
+            print("You already started a game, exit if you would like to play with a new animal")
+        else:
+            self.animalType = Caterpillar()
+            #set positioning of animal // draw
+            self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
+            self.animalType.setPositions(0,1)
+            self.drawAnimal()
+            #set positioning of food // draw
+            self.animalType.setFood(self.width,self.height)
+            self.drawFood()
 
     def createWorm(self):
-        self.animalType = Worm()
-        #set positioning of animal // draw
-        self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
-        self.animalType.setPositions(0,1)
-        self.drawAnimal()
-        #set positioning of food // draw
-        self.animalType.setFood(self.width,self.height)
-        self.drawFood()
+        if self.animalType:
+            print("You already started a game, exit if you would like to play with a new animal")
+        else:
+            self.animalType = Worm()
+            #set positioning of animal // draw
+            self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
+            self.animalType.setPositions(0,1)
+            self.drawAnimal()
+            #set positioning of food // draw
+            self.animalType.setFood(self.width,self.height)
+            self.drawFood()
         
     # Draws the grid
     def drawGrid(self):
@@ -198,7 +209,7 @@ class Grid:
         x1 = (x-1) * self.rectangle_size
         #print(y)
         y1 = (y-1) * self.rectangle_size
-        self.canvas.create_oval(x1,y1, x1+self.rectangle_size, y1+self.rectangle_size, fill="blue")
+        self.canvas.create_oval(x1,y1, x1+self.rectangle_size, y1+self.rectangle_size, fill=self.animalType.getFood())
         self.canvas.pack()
 
 def main(): #run mainloop 
