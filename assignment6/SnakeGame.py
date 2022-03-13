@@ -6,6 +6,7 @@ class Grid:
         #Initialize grid
         self.master = master
         self.keypressed=None
+        self.keypresses = 0
         self.animalType = None
         self.master.title("Lines")
         self.height = 36 
@@ -53,7 +54,7 @@ class Grid:
         
     def drawAnimal(self):
         for i in range(self.animalType.getLength()):
-            #print(self.animalType.getPositions())
+            
             self.placeMarker(self.animalType.getPositions()[i][0],(self.animalType.getPositions()[i][1]))
  
     def drawFood(self):
@@ -67,49 +68,41 @@ class Grid:
     # Snakes game requires us to keep moving in one direction until we 
     # press another key (a bit of a pain to figure out)
     # TO DO: You need to make the move method actuall move the snake!
+
+    keypress = 0
+
     def move(self):
         if (self.keypressed == 1):      #up
             changeX = 0
             changeY = -1
-            clearMrk = self.animalType.moveHead(changeX,changeY)
-            if (self.animalType.outOfBounds()):
-                self.GAMEOVER()
-            self.clearMarker(clearMrk)
-            self.drawAnimal()
+            self.keypresses = self.keypresses + 1
         if (self.keypressed == 2):      #right
             changeX = 1
             changeY = 0
-            self.animalType.setIsBent(1)
-            clearMrk = self.animalType.moveHead(changeX,changeY)
-            if (self.animalType.outOfBounds()):
-                self.GAMEOVER()
-            print("clear: %s", clearMrk)
-            self.clearMarker(clearMrk)
-            self.drawAnimal()
+            self.keypresses = self.keypresses + 1
         elif (self.keypressed == 3):    #down
             changeX = 0
             changeY = 1
-            clearMrk = self.animalType.moveHead(changeX,changeY)
-            if (self.animalType.outOfBounds()):
-                self.GAMEOVER()
-            self.clearMarker(clearMrk)
-            self.drawAnimal() 
+            self.keypresses = self.keypresses + 1
         elif (self.keypressed == 4):    #left
-            print ("Move left")
             changeX = -1
             changeY = 0
-            self.animalType.setIsBent(1)
-            clearMrk = self.animalType.moveHead(changeX,changeY)
-            if (self.animalType.outOfBounds()):
-                self.GAMEOVER()
-            print("clear: %s", clearMrk)
-            self.clearMarker(clearMrk)
-            self.drawAnimal()
+            self.keypresses = self.keypresses + 1
+        [clearMrk, eaten] = self.animalType.move(changeX,changeY)
+        if eaten:
+            print("HERE")
+            self.animalType.setFood(self.width,self.height)
+            print("DRAWING FOOD")
+            self.drawFood()
+        if (self.animalType.outOfBounds()):
+            self.GAMEOVER()
+        self.clearMarker(clearMrk)
+        self.drawAnimal()
             
         # After 1 second, call scanning again (create a recursive loop)
         # This construct is very important because it allows the system to
         # continually check for keypresses!
-        self.master.after(1000, self.move)    # Replace the 1000 with speeds from animal behavior classes.   
+        self.master.after(self.animalType.getSpeed()+self.keypresses*100, self.move)    # Replace the 1000 with speeds from animal behavior classes.   
         
     #######################################################################
     #Handlers for keypresses
@@ -141,22 +134,30 @@ class Grid:
         self.animalType.setStartingPosition(self.width,self.height) #Send the dimensions of the grid
         self.animalType.setPositions(0,1)
         self.drawAnimal()
-         #set positioning of food // draw
+        #set positioning of food // draw
         self.animalType.setFood(self.width,self.height)
         self.drawFood()
         
     
     def createCaterpillar(self):
         self.animalType = Caterpillar()
+        #set positioning of animal // draw
         self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
         self.animalType.setPositions(0,1)
         self.drawAnimal()
+        #set positioning of food // draw
+        self.animalType.setFood(self.width,self.height)
+        self.drawFood()
 
     def createWorm(self):
         self.animalType = Worm()
+        #set positioning of animal // draw
         self.animalType.setStartingPosition(self.width,self.height) #send dimensions of grid
         self.animalType.setPositions(0,1)
         self.drawAnimal()
+        #set positioning of food // draw
+        self.animalType.setFood(self.width,self.height)
+        self.drawFood()
         
     # Draws the grid
     def drawGrid(self):
@@ -171,7 +172,7 @@ class Grid:
     # Clears one marker from the grid
     # If you want to use this function you will need to ALSO add an update to the underlying matrix
     def clearMarker(self,clearMrk):
-        #print(clearMrk)
+        print(clearMrk)
         x = clearMrk[0]
         y = clearMrk[1]
         x1 = (x-1) * self.rectangle_size

@@ -12,7 +12,16 @@ class AnimalBehavior(ABC):
         self.meals = 0
         self.foodX = 0
         self.foodY = 0
+        #self.state = 0 
             
+    # #state materials
+    # @abstractmethod
+    # def changeToContent(self):
+    #     pass
+    # def changeToEngorged(self):
+    #     pass
+    # def changeToHungry(self):
+    #     pass
     @abstractmethod
     def getColor(self):
         pass
@@ -77,25 +86,36 @@ class AnimalBehavior(ABC):
            print("CHANGE STATE") 
 
     def move(self,changeX, changeY):
+        print("MOVE")
         self.head_x = self.head_x + changeX
         self.head_y = self.head_y + changeY 
         newPos = [(self.positions[0][0] + changeX), (self.positions[0][1] + changeY)]
         self.positions.insert(0,newPos)
+        eaten = self.checkEat(newPos)
         clearMrk = self.positions[-1]
         self.steps = self.steps + 1
-        print(self.steps)
         self.checkSteps()
-        del self.positions[-1]
-        return clearMrk
+        if eaten:
+            print()
+            self.length = self.length + 1
+        else: 
+            del self.positions[-1]
+            
+        return [clearMrk, eaten]
 
-    def moveHead(self,changeX, changeY):
-        clearMrk = self.move(changeX,changeY)
-        return clearMrk
+    def checkEat(self,newPos):
+        if (newPos[0] == self.getFoodX()) and (newPos[1] == self.getFoodY()):
+            print("EATEN")
+            return 1
+        else:
+            return 0
 
-    
-        
     def outOfBounds(self):
-       for i in range(self.length):
+       for i in range(self.length-1):
+            print(i)
+            print(self.positions)
+            print(self.length)
+            print(self.positions[i])
             x = self.positions[i][0]
             y = self.positions[i][1] 
             if ( x < 1 or x > 24):
@@ -108,7 +128,7 @@ class Snake(AnimalBehavior):
     def getColor(self):
         return "green"
     def getSpeed(self):
-        return 1
+        return 750
     def getFood(self):
         return "red"
     
@@ -117,7 +137,7 @@ class Caterpillar(AnimalBehavior):
     def getColor(self):
         return "red"
     def getSpeed(self):
-        return 3
+        return 1000
     def getFood(self):
         return "green"
 		
@@ -125,6 +145,6 @@ class Worm(AnimalBehavior):
     def getColor(self):
         return "brown"
     def getSpeed(self):
-        return 2
+        return 1250
     def getFood(self):
         return "yellow"
