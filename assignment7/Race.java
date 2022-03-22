@@ -6,15 +6,20 @@ public class Race {
     }
 
     public void executeStrategy(Horse h) {
-        strategy.runRace(h);
+        h.setPosition(strategy.runRace(h));
+        System.out.println(h.getPosition());
+
+        if (h.getPosition() >= 10) {
+            announceWinner(h);
+        }
+
     }
-    
-    public static void addHorses() {  }
-    
-    public static void startRace() {  } 
 
     //public static void runRace() { }
 
-    public static void announceWinner() { }
+    public static void announceWinner(Horse h) {
+        System.out.println(h.getName() + " in " + h.getColor() + "  won!");
+
+    }
 
 }
