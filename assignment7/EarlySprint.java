@@ -3,6 +3,7 @@ public class EarlySprint implements Strategy{
     double maxSpeed;
     double reducedSpeed;
 
+    //early sprint strategy
     @Override
     public double runRace(Horse h) {
         maxSpeed = h.getSpeed();

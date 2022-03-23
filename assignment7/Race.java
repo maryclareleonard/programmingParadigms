@@ -33,6 +33,7 @@ public class Race{
             int done4 = execution4.executeStrategy(h4);
             int done5 = execution5.executeStrategy(h5);
 
+            //set winner (only one)
             if (dummy == -1) {
                 if (done1 == 1) {
                     h1.setWinner(true);

@@ -4,6 +4,7 @@ public class SlowStart implements Strategy{
     double midSpeed;
     double maxSpeed;
 
+    //slow start strategy implementing strategy interface
     @Override
     public double runRace(Horse h) {
         System.out.println(h.getName() + " in " + h.getColor() + " is employing Slow Start strategy at speed " + h.getSpeed() + ".");

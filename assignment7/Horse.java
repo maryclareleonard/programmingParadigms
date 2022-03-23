@@ -11,6 +11,7 @@ public class Horse {
         this.speed = -1; //to check if no winner
     }
 
+    //constructor that is used to declare horse object
     public Horse(String name, int speed, String color) {
         this.name = name;
         this.speed = speed;

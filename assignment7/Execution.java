@@ -5,7 +5,7 @@ public class Execution {
         this.strategy = strategy;
     }
 
-    //ability to change strategy
+    //ability to change strategy - not used in my prog
     public void setStrategy(Strategy newStrategy) {
         this.strategy = newStrategy;
     }
