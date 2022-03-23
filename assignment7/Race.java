@@ -5,20 +5,18 @@ public class Race {
         this.strategy = strategy;
     }
 
-    public void executeStrategy(Horse h) {
+    public int executeStrategy(Horse h) {
         h.setPosition(strategy.runRace(h));
-        System.out.println(h.getPosition());
+        System.out.println(h.getName() + " current position: " + h.getPosition());
+        System.out.println();
 
         if (h.getPosition() >= 10) {
-            announceWinner(h);
+            h.setDone(true);
+            return 1;
         }
-
-    }
-
-    //public static void runRace() { }
-
-    public static void announceWinner(Horse h) {
-        System.out.println(h.getName() + " in " + h.getColor() + "  won!");
+        else {
+            return 0;
+        }
 
     }
 

@@ -5,9 +5,15 @@ public class SteadyRun implements Strategy{
     @Override
     public double runRace(Horse h) {
         System.out.println(h.getName() + " in " + h.getColor() + " is employing Steady Run strategy at speed " + h.getSpeed() + ".");
-        steadySpeed = 0.8 * h.getSpeed();
-        System.out.println("Steady speed: "+ steadySpeed);
-        newPos = h.getPosition() + steadySpeed;
+
+        if (h.getDone()) {  //if horse has reached the end
+            newPos = h.getPosition();
+        }
+        else {
+            steadySpeed = 0.8 * h.getSpeed();
+            System.out.println("Steady speed: "+ steadySpeed);
+            newPos = h.getPosition() + steadySpeed;
+        }
         return newPos;
     }
     
