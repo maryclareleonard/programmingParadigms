@@ -1,0 +1,26 @@
+The Strategy Interface is implemented by SlowStart, SteadyRun, and EarlySprint. Each of these implementers 
+have individual variables that are specific to that class as they assisted with computation of speed.
+
+The Main file is simple and calls the Race file that adds the horses, runs the race and declares the winner.
+Note that there are three test races with comments to detail who should win within the race class and 
+two need to be commented out at a time. I provided all three as suggested in the outline.
+
+The Execution class takes a strategy is where the horses position is set and updated by running the race. 
+Once the horse reaches posisition 10, their position should no longer be updated and therefore it is set to done.
+In the Execution class, the strategy can be changed, I did not use this, but it is implemented as requested.
+
+
+In terms of the output, as the horse is still moving the speed is given so that it is easier for the tester
+to cacluate/understand where horse is in the process besides just the position. 
+DESIGN DECISION: the horse will move at the speed it would move at based on the position it starts at. 
+For example, if the horse should move at speed 1.2 before 5km and starts this round at 4.8 it will move at 1.2
+for the full 1.2km. But then it will be at 6.2km so at the next speed set it will move at the next speed,
+in this example (slow start) it will move to mid of 1.6
+
+Note that I did not use the Decorator program to complete the color for the horses. 
+It was not an explicit part of the requirements for the assignment per Assignment7 doc and I was 
+having difficulty implementing it/changing the Horse class to be an abstract class as it is 
+intertwined with all the other files.
+
+This branch of my main github folder holds my attempt:
+https://github.com/maryclareleonard/programmingParadigms/tree/errors/assignment7
