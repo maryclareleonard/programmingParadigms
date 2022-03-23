@@ -4,22 +4,24 @@ public class Race{
     int dummy = -1;
     int count = 0;
 
+    Horse h;
+
     public Race() {
         //add horses with strategies
         Execution execution1 = new Execution(new SlowStart());
-        Horse h1 = new Horse("Ayman",2,"Green");
+        ColoredHorse h1 = new ColoredHorse(h,"Ayman",2,"Green");
 
         Execution execution2 = new Execution(new EarlySprint());
-        Horse h2 = new Horse("Becky",2,"Blue");
+        ColoredHorse h2 = new ColoredHorse(h,"Becky",2,"Blue");
             
         Execution execution3 = new Execution(new SteadyRun());
-        Horse h3 = new Horse("John",3,"Pink");
+        ColoredHorse h3 = new ColoredHorse(h,"John",3,"Pink");
 
         Execution execution4 = new Execution(new SlowStart());
-        Horse h4 = new Horse("Ben",3,"Red");
+        ColoredHorse h4 = new ColoredHorse(h,"Ben",3,"Red");
             
         Execution execution5 = new Execution(new EarlySprint());
-        Horse h5 = new Horse("Natalie",3,"Yellow");
+        ColoredHorse h5 = new ColoredHorse(h,"Natalie",3,"Yellow");
         
         //run race
         while ( !(h1.getDone() && h2.getDone() && h3.getDone() && h4.getDone() && h5.getDone() )) {

@@ -3,7 +3,7 @@ public class SteadyRun implements Strategy{
     double steadySpeed;
 
     @Override
-    public double runRace(Horse h) {
+    public double runRace(ColoredHorse h) {
         System.out.println(h.getName() + " in " + h.getColor() + " is employing Steady Run strategy at speed " + h.getSpeed() + ".");
 
         if (h.getDone()) {  //if horse has reached the end
