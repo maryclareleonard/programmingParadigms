@@ -1,3 +1,3 @@
 public interface Strategy {
-    public double runRace(ColoredHorse h);
+    public double runRace(Horse h);
 }

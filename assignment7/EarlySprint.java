@@ -4,7 +4,7 @@ public class EarlySprint implements Strategy{
     double reducedSpeed;
 
     @Override
-    public double runRace(ColoredHorse h) {
+    public double runRace(Horse h) {
         maxSpeed = h.getSpeed();
         reducedSpeed = h.getSpeed() * .7;
         System.out.println(h.getName() + " in " + h.getColor() + " is employing Early Sprint strategy at speed " + h.getSpeed() + ".");

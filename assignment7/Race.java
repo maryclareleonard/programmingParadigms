@@ -7,21 +7,59 @@ public class Race{
     Horse h;
 
     public Race() {
-        //add horses with strategies
+        //add horses with strategies 
+
+        //test 1 - Natalie wins
         Execution execution1 = new Execution(new SlowStart());
-        ColoredHorse h1 = new ColoredHorse(h,"Ayman",2,"Green");
+        Horse h1 = new Horse("Ayman",2,"Green");
 
         Execution execution2 = new Execution(new EarlySprint());
-        ColoredHorse h2 = new ColoredHorse(h,"Becky",2,"Blue");
+        Horse h2 = new Horse("Becky",2,"Blue");
             
         Execution execution3 = new Execution(new SteadyRun());
-        ColoredHorse h3 = new ColoredHorse(h,"John",3,"Pink");
+        Horse h3 = new Horse("John",3,"Pink");
 
         Execution execution4 = new Execution(new SlowStart());
-        ColoredHorse h4 = new ColoredHorse(h,"Ben",3,"Red");
+        Horse h4 = new Horse("Ben",3,"Red");
             
         Execution execution5 = new Execution(new EarlySprint());
-        ColoredHorse h5 = new ColoredHorse(h,"Natalie",3,"Yellow");
+        Horse h5 = new Horse("Natalie",3,"Yellow");
+
+        //second test - John wins, Natalie and Ben get there too but John is checked first
+        /*
+        Execution execution1 = new Execution(new SteadyRun());
+        Horse h1 = new Horse("Ayman",2,"Green");
+
+        Execution execution2 = new Execution(new EarlySprint());
+        Horse h2 = new Horse("Becky",2,"Blue");
+            
+        Execution execution3 = new Execution(new SteadyRun());
+        Horse h3 = new Horse("John",3,"Pink");
+
+        Execution execution4 = new Execution(new SlowStart());
+        Horse h4 = new Horse("Ben",3,"Red");
+            
+        Execution execution5 = new Execution(new SlowStart());
+        Horse h5 = new Horse("Natalie",3,"Yellow");
+        */
+
+        //third test - ayman wins, Becky gets there too in round 3 but Ayman checked first
+        /*
+        Execution execution1 = new Execution(new SlowStart());
+        Horse h1 = new Horse("Ayman",4,"Green");
+
+        Execution execution2 = new Execution(new EarlySprint());
+        Horse h2 = new Horse("Becky",4,"Blue");
+            
+        Execution execution3 = new Execution(new SteadyRun());
+        Horse h3 = new Horse("John",3,"Pink");
+
+        Execution execution4 = new Execution(new SlowStart());
+        Horse h4 = new Horse("Ben",2,"Red");
+            
+        Execution execution5 = new Execution(new EarlySprint());
+        Horse h5 = new Horse("Natalie",2,"Yellow");
+        */
         
         //run race
         while ( !(h1.getDone() && h2.getDone() && h3.getDone() && h4.getDone() && h5.getDone() )) {

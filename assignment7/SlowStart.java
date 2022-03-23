@@ -5,7 +5,7 @@ public class SlowStart implements Strategy{
     double maxSpeed;
 
     @Override
-    public double runRace(ColoredHorse h) {
+    public double runRace(Horse h) {
         System.out.println(h.getName() + " in " + h.getColor() + " is employing Slow Start strategy at speed " + h.getSpeed() + ".");
         if (h.getDone()) {  //if horse has reached the end
             newPos = h.getPosition();
