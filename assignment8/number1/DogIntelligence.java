@@ -12,7 +12,7 @@ public class DogIntelligence {
         this.category = " ";
         this.comment = " ";
         this.obey = -1;
-        this.reps_lower = -1;
+        this.reps_lower = -2;
         this.reps_upper = -1; 
     }
 
@@ -20,11 +20,11 @@ public class DogIntelligence {
     public DogIntelligence(String line){
         String [] lineSplit = line.split(",",6);
         this.breed = lineSplit[0];
-        this.category = lineSplit[1]; 
+        this.category = lineSplit[1];
         this.comment = lineSplit[2];
-        this.obey = Double.parseDouble(lineSplit[3]);
-        this.reps_lower = Integer.parseInt(lineSplit[4]);
-        this.reps_upper = Integer.parseInt(lineSplit[5]); 
+        this.obey = Double.valueOf((lineSplit[3]).substring(1,lineSplit[3].length() -1));
+        this.reps_lower = Integer.valueOf((lineSplit[4]).substring(1,lineSplit[4].length() -1));
+        this.reps_upper = Integer.valueOf((lineSplit[5]).substring(1,lineSplit[5].length() -1));
     }
 
     //equality
@@ -41,6 +41,19 @@ public class DogIntelligence {
                 this.reps_lower == dogIntell.reps_lower &&
                 this.reps_upper == dogIntell.reps_upper
             );
+    }
+
+    //string 
+    public String toString() { //override to string method
+        return  "Breed: " + this.breed + ", " + "Category: " + this.category + ", " + 
+                "\nComment: " + this.comment + ", " + 
+                "\nObey " + this.obey + ", " + "Reps: " + this.reps_lower + " to " + this.reps_upper + "\n";
+    }
+
+    //hashcode
+    public int hash() {
+        String myString = this.toString();
+        return (int) myString.hashCode();
     }
 
 }
