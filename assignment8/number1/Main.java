@@ -1,4 +1,5 @@
 import java.io.*;
+import static java.util.Arrays.asList;
 import java.util.*;
 public class Main {
     public static void main(String[] args) {
@@ -43,9 +44,24 @@ public class Main {
         System.out.println("DogIntell0: " + dogintell0.hash());
         System.out.println("DogIntell1: " + dogintell1.hash());
         System.out.println("DogIntellEmpty: " + dogintellEmpty.hash()); 
+        printBreak();
 
         //NUMBER 4
+        System.out.println("Number 4: Nested Lists"); 
+        List<Object> passedList = a(a(1), 2, a(a(null, null), 5), a(a(a())), a(a(a(6))), 7, null, a());
+        System.out.println("Passed List is " + passedList);
+        List<Object> finalList = FlattenList.flatten(passedList);
+        System.out.println("Flattened (without Nulls): " + finalList);
+        printBreak();
+
+        //NUMBER
+
     } 
+
+    private static List<Object> a(Object... a) {
+		return asList(a);
+	}
+
     public static void printBreak() {
         System.out.println();
         System.out.println(); 
