@@ -7,9 +7,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Filter1 implements Filter{
 
-    BlockingQueue<String> myQueue = new LinkedBlockingQueue<> (10);
+    BlockingQueue<String> myQueue;
 
-    public Filter1() {}
+    public Filter1(BlockingQueue<String> myQueueIncoming) {
+        this.myQueue = myQueueIncoming;
+    }
     //must implement the inherited abstract method Runnable.run()
     @Override
     public void run() {
