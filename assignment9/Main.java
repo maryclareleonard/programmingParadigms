@@ -26,11 +26,11 @@ public class Main {
         Thread thread3 = new Thread(runnable3);
         thread3.start();
 
-        /*create fourth filter
-        Filter filter4 = new Filter4(filter1, myQueue3, myQueue4); //must know of first 1, constructor takes arg
+        //create fourth filter
+        Filter filter4 = new Filter4(filter1, myQueue3); //must know of first 1, constructor takes arg
         Runnable runnable4 = filter4;
         Thread thread4 = new Thread(runnable4);
-        thread4.start(); */
+        thread4.start(); 
 
     }
 }

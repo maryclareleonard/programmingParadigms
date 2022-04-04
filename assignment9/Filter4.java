@@ -1,28 +1,29 @@
 import java.util.concurrent.BlockingQueue;
 
-public class Filter3 implements Filter{
+public class Filter4 implements Filter{
     Filter prevFilter;
     BlockingQueue<String> myQueueIncoming;
     BlockingQueue<String> myQueueOutgoing;
     String [] words;
-    int i;
+    int count;
 
-    public Filter3 (Filter filter2, BlockingQueue<String> myQueueIncoming, BlockingQueue<String> myQueueOutgoing ) {
-        this.prevFilter = filter2;
+    public Filter4 (Filter filter3, BlockingQueue<String> myQueueIncoming) {
+        this.prevFilter = filter3;
         this.myQueueIncoming = myQueueIncoming;
-        this.myQueueOutgoing = myQueueOutgoing;
+        //this.myQueueOutgoing = myQueueOutgoing;
     }
 
     //must implement the inherited abstract method Runnable.run()
     @Override
     public void run() {
         try {
-            String line = myQueueIncoming.take(); //read line to queue if space
-            while (line != null) {
-                words = splitTextIntoWords(line);
-                i = 0;
-                try {
-                    while (i < words.length) {
+            String word = myQueueIncoming.take(); //read line to queue if space
+            while (word != null) {
+                System.out.println("Final Stage: " + word);
+                System.out.println("Count: " + count);
+                count++;
+                /*try {
+                    while (i < words.length -1 ) {
                         System.out.println("Word: " + words[i]);
                         myQueueOutgoing.put(words[i]); //add line to queue if space
                         System.out.println("i: " + i);
@@ -31,18 +32,12 @@ public class Filter3 implements Filter{
                 } catch (InterruptedException ie0 ){
                     System.out.println("An error occured: " + ie0);
                     ie0.printStackTrace(); 
-                }
-                line = myQueueIncoming.take();
+                }*/
+                word = myQueueIncoming.take();
             }
         } catch (InterruptedException ie0 ){
             System.out.println("An error occured: " + ie0);
             ie0.printStackTrace(); 
         }
-    }
-
-    String [] splitTextIntoWords(String line) {
-        String[] splited = line.split("\\s+");
-        //System.out.println("Splited: " + splited[0] + "_" + splited[1]);
-        return splited;
     }
 }
