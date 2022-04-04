@@ -8,8 +8,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Filter1 implements Filter{
 
     BlockingQueue<String> myQueue;
+    String file;
 
-    public Filter1(BlockingQueue<String> myQueueIncoming) {
+    public Filter1(String file, BlockingQueue<String> myQueueIncoming) {
+        this.file = file;
         this.myQueue = myQueueIncoming;
     }
     //must implement the inherited abstract method Runnable.run()
@@ -17,7 +19,7 @@ public class Filter1 implements Filter{
     public void run() {
         try {
             //buffered reader is synchronized (thread safe) - scanner is not
-            BufferedReader reader = new BufferedReader(new FileReader("fileLong.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             try {
                 String line = reader.readLine();
                 while (line != null) { 
