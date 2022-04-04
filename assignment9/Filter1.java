@@ -21,7 +21,7 @@ public class Filter1 implements Filter{
             try {
                 String line = reader.readLine();
                 while (line != null) { 
-                    System.out.println(line);
+                    System.out.println("Line: " + line);
                     try {
                         myQueue.put(line); //add line to queue if space
                     } catch (InterruptedException ie0 ){

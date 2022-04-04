@@ -1,26 +1,33 @@
 import java.util.concurrent.BlockingQueue;
-public class Filter2 implements Filter{
 
+public class Filter3 implements Filter{
     Filter prevFilter;
     BlockingQueue<String> myQueueIncoming;
     BlockingQueue<String> myQueueOutgoing;
+    String [] words;
+    int i;
 
-    public Filter2 (Filter filter1, BlockingQueue<String> myQueueIncoming, BlockingQueue<String> myQueueOutgoing ) {
-        this.prevFilter = filter1;
+    public Filter3 (Filter filter2, BlockingQueue<String> myQueueIncoming, BlockingQueue<String> myQueueOutgoing ) {
+        this.prevFilter = filter2;
         this.myQueueIncoming = myQueueIncoming;
         this.myQueueOutgoing = myQueueOutgoing;
     }
+
     //must implement the inherited abstract method Runnable.run()
     @Override
     public void run() {
         try {
             String line = myQueueIncoming.take(); //read line to queue if space
             while (line != null) {
-                line = removeNonAlpha(line);
-                line = line.toUpperCase();
+                words = splitTextIntoWords(line);
+                i = 0;
                 try {
-                    System.out.println("Line Edited: " + line);
-                    myQueueOutgoing.put(line); //add line to queue if space
+                    while (i < words.length -1 ) {
+                        System.out.println("Word: " + words[i]);
+                        myQueueOutgoing.put(words[i]); //add line to queue if space
+                        System.out.println("i: " + i);
+                        i++;
+                    }
                 } catch (InterruptedException ie0 ){
                     System.out.println("An error occured: " + ie0);
                     ie0.printStackTrace(); 
@@ -31,11 +38,11 @@ public class Filter2 implements Filter{
             System.out.println("An error occured: " + ie0);
             ie0.printStackTrace(); 
         }
-        
     }
 
-    public String removeNonAlpha( String line) {
-        return line.replaceAll("[^A-Za-z ]", ""); //but keep the space
+    String [] splitTextIntoWords(String line) {
+        String[] splited = line.split("\\s+");
+        //System.out.println("Splited: " + splited[0] + "_" + splited[1]);
+        return splited;
     }
-
 }
