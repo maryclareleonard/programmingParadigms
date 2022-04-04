@@ -15,14 +15,17 @@ public class Filter2 implements Filter{
     public void run() {
         try {
             String line = myQueueIncoming.take(); //read line to queue if space
-            line = removeNonAlpha(line);
-            line = line.toUpperCase();
-            try {
-                myQueueOutgoing.put(line); //add line to queue if space
-                System.out.println(line);
-            } catch (InterruptedException ie0 ){
-                System.out.println("An error occured: " + ie0);
-                ie0.printStackTrace(); 
+            while (line != null) {
+                line = removeNonAlpha(line);
+                line = line.toUpperCase();
+                try {
+                    myQueueOutgoing.put(line); //add line to queue if space
+                    System.out.println(line);
+                } catch (InterruptedException ie0 ){
+                    System.out.println("An error occured: " + ie0);
+                    ie0.printStackTrace(); 
+                }
+                line = myQueueIncoming.take();
             }
         } catch (InterruptedException ie0 ){
             System.out.println("An error occured: " + ie0);
