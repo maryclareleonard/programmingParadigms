@@ -7,10 +7,15 @@ public class Filter4 implements Filter{
     String [] words;
     int count;
 
-    public Filter4 (Filter filter3, BlockingQueue<String> myQueueIncoming) {
+    public Filter4 (Filter filter3) {
         this.prevFilter = filter3;
-        this.myQueueIncoming = myQueueIncoming;
+        this.myQueueIncoming = this.prevFilter.getQueue();
         //this.myQueueOutgoing = myQueueOutgoing;
+    }
+    
+    //not used but for completeness
+    public BlockingQueue<String> getQueue() {
+        return myQueueOutgoing;
     }
 
     //must implement the inherited abstract method Runnable.run()

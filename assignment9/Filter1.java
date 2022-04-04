@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class Filter1 implements Filter{
 
@@ -13,6 +12,10 @@ public class Filter1 implements Filter{
     public Filter1(String file, BlockingQueue<String> myQueueIncoming) {
         this.file = file;
         this.myQueue = myQueueIncoming;
+    }
+
+    public BlockingQueue<String> getQueue() {
+        return myQueue;
     }
     //must implement the inherited abstract method Runnable.run()
     @Override

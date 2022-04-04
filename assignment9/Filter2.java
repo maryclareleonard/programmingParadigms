@@ -5,11 +5,16 @@ public class Filter2 implements Filter{
     BlockingQueue<String> myQueueIncoming;
     BlockingQueue<String> myQueueOutgoing;
 
-    public Filter2 (Filter filter1, BlockingQueue<String> myQueueIncoming, BlockingQueue<String> myQueueOutgoing ) {
+    public Filter2 (Filter filter1, BlockingQueue<String> myQueueOutgoing ) {
         this.prevFilter = filter1;
-        this.myQueueIncoming = myQueueIncoming;
+        this.myQueueIncoming = this.prevFilter.getQueue();
         this.myQueueOutgoing = myQueueOutgoing;
     }
+
+    public BlockingQueue<String> getQueue() {
+        return myQueueOutgoing;
+    }
+
     //must implement the inherited abstract method Runnable.run()
     @Override
     public void run() {
