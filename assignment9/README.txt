@@ -1,0 +1,1 @@
+I did not have any issues with any point of the pipeline being slow during any portion of the coding process and did not feel that it was necessary to check if any was a blocking point as I did not observe anything during the coding process. I tested each pipeline separately and created each indiviudally and never had a challenge waiting for results.
