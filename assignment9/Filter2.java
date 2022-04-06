@@ -21,10 +21,19 @@ public class Filter2 implements Filter{
         try {
             String line = myQueueIncoming.take(); //read line to queue if space
             while (line != null) {
+                if (line == "EOF") {  //end of file
+                    try {
+                        myQueueOutgoing.put("EOF"); 
+                    } catch (InterruptedException ie0 ){
+                        System.out.println("An error occured: " + ie0);
+                        ie0.printStackTrace(); 
+                    }
+                    break; //exit while loop 
+                }
                 line = removeNonAlpha(line);
                 line = line.toUpperCase();
                 try {
-                    System.out.println("Line Edited: " + line);
+                    //System.out.println("Line Edited: " + line);
                     myQueueOutgoing.put(line); //add line to queue if space
                 } catch (InterruptedException ie0 ){
                     System.out.println("An error occured: " + ie0);
@@ -32,11 +41,11 @@ public class Filter2 implements Filter{
                 }
                 line = myQueueIncoming.take();
             }
+
         } catch (InterruptedException ie0 ){
             System.out.println("An error occured: " + ie0);
             ie0.printStackTrace(); 
         }
-        
     }
 
     public String removeNonAlpha( String line) {

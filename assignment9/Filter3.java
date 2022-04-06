@@ -22,13 +22,22 @@ public class Filter3 implements Filter{
         try {
             String line = myQueueIncoming.take(); //read line to queue if space
             while (line != null) {
+                if (line == "EOF") {  //end of file
+                    try {
+                        myQueueOutgoing.put("EOF"); 
+                    } catch (InterruptedException ie0 ){
+                        System.out.println("An error occured: " + ie0);
+                        ie0.printStackTrace(); 
+                    }
+                    break; //exit while loop 
+                }
                 words = splitTextIntoWords(line);
                 i = 0;
                 try {
                     while (i < words.length) {
-                        System.out.println("Word: " + words[i]);
+                        //System.out.println("Word: " + words[i]);
                         myQueueOutgoing.put(words[i]); //add line to queue if space
-                        System.out.println("i: " + i);
+                        //System.out.println("i: " + i);
                         i++;
                     }
                 } catch (InterruptedException ie0 ){
@@ -37,6 +46,7 @@ public class Filter3 implements Filter{
                 }
                 line = myQueueIncoming.take();
             }
+
         } catch (InterruptedException ie0 ){
             System.out.println("An error occured: " + ie0);
             ie0.printStackTrace(); 

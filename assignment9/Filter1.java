@@ -26,7 +26,7 @@ public class Filter1 implements Filter{
             try {
                 String line = reader.readLine();
                 while (line != null) { 
-                    System.out.println("Line: " + line);
+                    /*System.out.println("Line: " + line);*/
                     try {
                         myQueue.put(line); //add line to queue if space
                     } catch (InterruptedException ie0 ){
@@ -34,6 +34,13 @@ public class Filter1 implements Filter{
                         ie0.printStackTrace(); 
                     }
                     line = reader.readLine();
+                }
+                //reached end of file so pass secret message
+                try {
+                    myQueue.put("EOF"); //add line to queue if space
+                } catch (InterruptedException ie0 ){
+                    System.out.println("An error occured: " + ie0);
+                    ie0.printStackTrace(); 
                 }
             } catch (IOException i) {
                 System.out.println("An error occured: " + i);

@@ -1,11 +1,14 @@
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.*;
+
 public class Pipeline{
 
     BlockingQueue<String> myQueue1;
     BlockingQueue<String> myQueue2;
     BlockingQueue<String> myQueue3;
     BlockingQueue<String> myQueue4;
+    HashMap<String, Integer>  wordCountMap;
     String file;
 
     public Pipeline (String txt) {
@@ -14,7 +17,10 @@ public class Pipeline{
         this.myQueue2 = new LinkedBlockingQueue<> (10);
         this.myQueue3 = new LinkedBlockingQueue<> (20);
         this.myQueue4 = new LinkedBlockingQueue<> (10);
+        this.wordCountMap = new HashMap<String,Integer>();
     }
+
+    public HashMap<String,Integer> getMap() { return wordCountMap; }
 
     public void startPipeline() {
         //create first filter
@@ -36,10 +42,10 @@ public class Pipeline{
         thread3.start();
 
         //create fourth filter
-        Filter filter4 = new Filter4(filter3); //must know of first 1, constructor takes arg
+        Filter filter4 = new Filter4(wordCountMap, filter3); //must know of first 1, constructor takes arg
         Runnable runnable4 = filter4;
         Thread thread4 = new Thread(runnable4);
         thread4.start(); 
-
     }
 }
+
